@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="checkbox">
+        <!--波纹的颜色-->
+        <!--<item name="android:colorControlHighlight">@color/colorPrimary</item>-->
+        <!--选中的颜色-->
+        <item name="colorAccent">#00B6A4</item>
+        <!--未选中的颜色-->
+        <item name="colorControlNormal">#00B6A4</item>
+    </style>
+
+</resources>
