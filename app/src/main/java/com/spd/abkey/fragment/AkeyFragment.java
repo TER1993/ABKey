@@ -60,6 +60,7 @@ public class AkeyFragment extends BaseMvpFragment<AkeyPresenter> implements KeyC
 
     private void getAppList() {
         AppInfoUtil.getAllProgramInfo(mList, AppAbKey.getInstance());
+
         String pkgName = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "");
         if ("".equals(pkgName)) {
             return;
