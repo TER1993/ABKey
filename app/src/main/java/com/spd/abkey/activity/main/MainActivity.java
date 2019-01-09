@@ -7,21 +7,24 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 
 import com.spd.abkey.AppAbKey;
 import com.spd.abkey.R;
+import com.spd.abkey.RobService;
 import com.spd.abkey.activity.main.adapter.MainAdapter;
 import com.spd.abkey.activity.main.contract.MainContract;
 import com.spd.abkey.activity.main.presenter.MainPresenter;
 import com.spd.abkey.base.BaseMvpActivity;
 import com.spd.abkey.fragment.AkeyFragment;
 import com.spd.abkey.fragment.BkeyFragment;
-import com.spd.abkey.fragment.model.KeyModel;
-import com.spd.abkey.utils.SpUtils;
+import com.spd.abkey.utils.Logcat;
+import com.spd.abkey.utils.ToastUtils;
 import com.spd.abkey.view.SlideViewPager;
 
 import java.util.ArrayList;
@@ -37,8 +40,53 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (!isAccessibilitySettingsOn(AppAbKey.getInstance())){
+            ToastUtils.showLongToastSafe("请先打开ABkey的无障碍设置");
+            startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+        }
     }
+
+
+
+    // To check if service is enabled
+    private boolean isAccessibilitySettingsOn(Context mContext) {
+        int accessibilityEnabled = 0;
+        final String service = getPackageName() + "/" + RobService.class.getCanonicalName();
+        try {
+            accessibilityEnabled = Settings.Secure.getInt(
+                    mContext.getApplicationContext().getContentResolver(),
+                    android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
+            Logcat.d("accessibilityEnabled = " + accessibilityEnabled);
+        } catch (Settings.SettingNotFoundException e) {
+            Logcat.d( "Error finding setting, default accessibility to not found: "
+                    + e.getMessage());
+        }
+        TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
+
+        if (accessibilityEnabled == 1) {
+            Logcat.d("***ACCESSIBILITY IS ENABLED*** -----------------");
+            String settingValue = Settings.Secure.getString(
+                    mContext.getApplicationContext().getContentResolver(),
+                    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+            if (settingValue != null) {
+                mStringColonSplitter.setString(settingValue);
+                while (mStringColonSplitter.hasNext()) {
+                    String accessibilityService = mStringColonSplitter.next();
+
+                    Logcat.d( "-------------- > accessibilityService :: " + accessibilityService + " " + service);
+                    if (accessibilityService.equalsIgnoreCase(service)) {
+                        Logcat.d("We've found the correct setting - accessibility is switched on!");
+                        return true;
+                    }
+                }
+            }
+        } else {
+            Logcat.d("***ACCESSIBILITY IS DISABLED***");
+        }
+
+        return false;
+    }
+
 
     @Override
     protected int getActLayoutId() {
@@ -89,17 +137,17 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_F4) {
-            String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "");
-            if (!"".equals(name)) {
-                runapp(name, AppAbKey.getInstance());
-            }
-        } else if (keyCode == KeyEvent.KEYCODE_F5) {
-            String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_BKEY, "");
-            if (!"".equals(name)) {
-                runapp(name, AppAbKey.getInstance());
-            }
-        }
+//        if (keyCode == KeyEvent.KEYCODE_F4) {
+//            String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "");
+//            if (!"".equals(name)) {
+//                runapp(name, AppAbKey.getInstance());
+//            }
+//        } else if (keyCode == KeyEvent.KEYCODE_F5) {
+//            String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_BKEY, "");
+//            if (!"".equals(name)) {
+//                runapp(name, AppAbKey.getInstance());
+//            }
+//        }
         return super.onKeyDown(keyCode, event);
     }
 
