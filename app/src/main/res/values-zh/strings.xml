@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ABKey</string>
+
+    <string name="desc" />
+    <string name="key_a_b">已被占用，可以在KeyB中点击应用取消选择</string>
+    <string name="key_b_a">已被占用，可以在KeyA中点击应用取消选择</string>
+    <string name="key_barrier_free">请先打开ABkey的无障碍设置</string>
+</resources>

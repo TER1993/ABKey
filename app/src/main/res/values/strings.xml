@@ -1,7 +1,8 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ABKey</string>
 
     <string name="desc" />
-    <string name="key_a_b">已被占用，可以在KeyB中点击应用取消选择</string>
-    <string name="key_b_a">已被占用，可以在KeyA中点击应用取消选择</string>
+    <string name="key_a_b">Already occupied, you can click on the application in the KeyB to deselect</string>
+    <string name="key_b_a">Already occupied, you can click on the application in the KeyA to deselect</string>
+    <string name="key_barrier_free" tools:ignore="StringEscaping">Please open ABkey's accessibility settings first</string>
 </resources>

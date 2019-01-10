@@ -41,7 +41,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!isAccessibilitySettingsOn(AppAbKey.getInstance())){
-            ToastUtils.showLongToastSafe("请先打开ABkey的无障碍设置");
+            ToastUtils.showLongToastSafe(R.string.key_barrier_free);
             startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
         }
     }
