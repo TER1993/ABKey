@@ -1,6 +1,7 @@
 package com.spd.abkey.fragment;
 
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,10 @@ import com.spd.abkey.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.spd.abkey.fragment.model.KeyModel.SCAN_HEAD;
+import static com.spd.abkey.fragment.model.KeyModel.SCAN_KEY;
+import static com.spd.abkey.fragment.model.KeyModel.SCAN_SET;
 
 /**
  * @author xuyan
@@ -59,6 +64,15 @@ public class AkeyFragment extends BaseMvpFragment<AkeyPresenter> implements KeyC
     }
 
     private void getAppList() {
+
+        if ("n63".equals(SystemProperties.get(SCAN_HEAD))) {
+            AppBean appBean = new AppBean();
+            appBean.setAppName("Scan");
+            appBean.setPackageName(SCAN_SET);
+            appBean.setAppIcon(getResources().getDrawable(R.drawable.ic_scan));
+            mList.add(appBean);
+        }
+
         AppInfoUtil.getAllProgramInfo(mList, AppAbKey.getInstance());
 
         String pkgName = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "");
@@ -84,13 +98,20 @@ public class AkeyFragment extends BaseMvpFragment<AkeyPresenter> implements KeyC
                 mList.get(i).setChecked(false);
             }
             SpUtils.put(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "");
+            if (SCAN_SET.equals(mList.get(position).getPackageName())) {
+                SystemProperties.set(SCAN_KEY, "null");
+            }
         } else {
             for (int i = 0; i < mList.size(); i++) {
                 mList.get(i).setChecked(false);
             }
             mList.get(position).setChecked(true);
             SpUtils.put(AppAbKey.getInstance(), KeyModel.KAY_AKEY, mList.get(position).getPackageName());
+            if (SCAN_SET.equals(mList.get(position).getPackageName())) {
+                SystemProperties.set(SCAN_KEY, "f1");
+            }
         }
+
         mAdapter.notifyDataSetChanged();
     }
 }

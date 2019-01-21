@@ -4,5 +4,5 @@
     <string name="desc" />
     <string name="key_a_b">Already occupied, you can click on the application in the KeyB to deselect</string>
     <string name="key_b_a">Already occupied, you can click on the application in the KeyA to deselect</string>
-    <string name="key_barrier_free" tools:ignore="StringEscaping">Please open ABkey's accessibility settings first</string>
+    <string name="key_barrier_free">Please open ABkeys accessibility settings first</string>
 </resources>

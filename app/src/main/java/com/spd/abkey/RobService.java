@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.SystemProperties;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 
@@ -14,6 +15,9 @@ import com.spd.abkey.fragment.model.KeyModel;
 import com.spd.abkey.utils.SpUtils;
 
 import java.util.List;
+
+import static com.spd.abkey.fragment.model.KeyModel.SCAN_KEY;
+import static com.spd.abkey.fragment.model.KeyModel.SCAN_SET;
 
 /**
  * @author xuyan  无障碍监听
@@ -36,19 +40,25 @@ public class RobService extends AccessibilityService {
         if (keyCode == KeyEvent.KEYCODE_F1 && event.getAction() == KeyEvent.ACTION_DOWN) {
             String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "");
             if (!"".equals(name)) {
-                runapp(name, AppAbKey.getInstance());
+                runapp(name, AppAbKey.getInstance(), "f1");
             }
         } else if (keyCode == KeyEvent.KEYCODE_F2 && event.getAction() == KeyEvent.ACTION_DOWN) {
             String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_BKEY, "");
             if (!"".equals(name)) {
-                runapp(name, AppAbKey.getInstance());
+                runapp(name, AppAbKey.getInstance(), "f2");
             }
         }
         return super.onKeyEvent(event);
     }
 
 
-    public static void runapp(String packageName, Context mContext) {
+    public static void runapp(String packageName, Context mContext, String f) {
+
+        if (SCAN_SET.equals(packageName)) {
+            SystemProperties.set(SCAN_KEY, f);
+            return;
+        }
+
         PackageInfo pi;
         try {
             pi = mContext.getPackageManager().getPackageInfo(packageName, 0);
