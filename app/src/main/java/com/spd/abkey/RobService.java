@@ -11,6 +11,7 @@ import android.os.SystemProperties;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 
+import com.spd.abkey.activity.main.model.MainModel;
 import com.spd.abkey.fragment.model.KeyModel;
 import com.spd.abkey.utils.SpUtils;
 
@@ -37,12 +38,12 @@ public class RobService extends AccessibilityService {
     protected boolean onKeyEvent(KeyEvent event) {
 
         int keyCode = event.getKeyCode();
-        if (keyCode == KeyEvent.KEYCODE_F1 && event.getAction() == KeyEvent.ACTION_DOWN) {
+        if (keyCode == AppAbKey.getAppKeyA() && event.getAction() == KeyEvent.ACTION_DOWN) {
             String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "");
             if (!"".equals(name)) {
                 runapp(name, AppAbKey.getInstance(), "f1");
             }
-        } else if (keyCode == KeyEvent.KEYCODE_F2 && event.getAction() == KeyEvent.ACTION_DOWN) {
+        } else if (keyCode == AppAbKey.getAppKeyB() && event.getAction() == KeyEvent.ACTION_DOWN) {
             String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_BKEY, "");
             if (!"".equals(name)) {
                 runapp(name, AppAbKey.getInstance(), "f2");

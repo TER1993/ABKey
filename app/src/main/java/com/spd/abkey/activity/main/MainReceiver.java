@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.view.KeyEvent;
 
 import com.spd.abkey.AppAbKey;
 import com.spd.abkey.activity.main.model.MainModel;

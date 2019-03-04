@@ -1,7 +1,9 @@
 package com.spd.abkey.activity.main;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -13,6 +15,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.spd.abkey.AppAbKey;
 import com.spd.abkey.R;
@@ -23,7 +27,10 @@ import com.spd.abkey.activity.main.presenter.MainPresenter;
 import com.spd.abkey.base.BaseMvpActivity;
 import com.spd.abkey.fragment.AkeyFragment;
 import com.spd.abkey.fragment.BkeyFragment;
+import com.spd.abkey.fragment.model.KeyModel;
+import com.spd.abkey.utils.KeyName;
 import com.spd.abkey.utils.Logcat;
+import com.spd.abkey.utils.SpUtils;
 import com.spd.abkey.utils.ToastUtils;
 import com.spd.abkey.view.SlideViewPager;
 
@@ -36,16 +43,19 @@ import java.util.List;
 public class MainActivity extends BaseMvpActivity<MainPresenter> implements MainContract.View, TabLayout.BaseOnTabSelectedListener {
 
     public SlideViewPager mViewpager;
+    private TabLayout mTabMain;
+    private int keyPos;
+    private int keyA;
+    private int keyB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!isAccessibilitySettingsOn(AppAbKey.getInstance())){
+        if (!isAccessibilitySettingsOn(AppAbKey.getInstance())) {
             ToastUtils.showLongToastSafe(R.string.key_barrier_free);
             startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
         }
     }
-
 
 
     // To check if service is enabled
@@ -58,7 +68,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                     android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
             Logcat.d("accessibilityEnabled = " + accessibilityEnabled);
         } catch (Settings.SettingNotFoundException e) {
-            Logcat.d( "Error finding setting, default accessibility to not found: "
+            Logcat.d("Error finding setting, default accessibility to not found: "
                     + e.getMessage());
         }
         TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
@@ -73,7 +83,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                 while (mStringColonSplitter.hasNext()) {
                     String accessibilityService = mStringColonSplitter.next();
 
-                    Logcat.d( "-------------- > accessibilityService :: " + accessibilityService + " " + service);
+                    Logcat.d("-------------- > accessibilityService :: " + accessibilityService + " " + service);
                     if (accessibilityService.equalsIgnoreCase(service)) {
                         Logcat.d("We've found the correct setting - accessibility is switched on!");
                         return true;
@@ -101,7 +111,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
         mViewpager = findViewById(R.id.vp_container);
-        TabLayout mTabMain = findViewById(R.id.tab_main);
+        mTabMain = findViewById(R.id.tab_main);
         mTabMain.setupWithViewPager(mViewpager);
         List<Fragment> mTabList = new ArrayList<>();
         AkeyFragment akeyFragment = new AkeyFragment();
@@ -121,7 +131,15 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-
+        // 获取位置
+        keyPos = tab.getPosition();
+        if (keyPos == 0) {
+            ToastUtils.showLongToastSafe("请按下要设定的按键A");
+//            Toast.makeText(MainActivity.this,"请按下要设定的按键",Toast.LENGTH_SHORT).show();
+        } else if (keyPos == 1) {
+            ToastUtils.showLongToastSafe("请按下要设定的按键B");
+        }
+//        Toast.makeText(MainActivity.this,"请按下要设定的按键",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -134,9 +152,23 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 
     }
 
+    private int keyWord;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        keyWord = keyCode;
+        if (keyPos == 0) {
+            keyA = keyCode;
+            ToastUtils.showLongToastSafe("设定A键值:" + keyA);
+            showNormalDialog();
+
+        } else if (keyPos == 1) {
+            keyB = keyCode;
+            ToastUtils.showLongToastSafe("设定B键值:" + keyB);
+            showNormalDialog();
+        }
+
 //        if (keyCode == KeyEvent.KEYCODE_F4) {
 //            String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "");
 //            if (!"".equals(name)) {
@@ -148,7 +180,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
 //                runapp(name, AppAbKey.getInstance());
 //            }
 //        }
-        return super.onKeyDown(keyCode, event);
+        return true;
     }
 
 
@@ -174,6 +206,47 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showNormalDialog() {
+        /* @setIcon 设置对话框图标
+         * @setTitle 设置对话框标题
+         * @setMessage 设置对话框消息提示
+         * setXXX方法返回Dialog对象，因此可以链式设置属性
+         */
+        final AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(MainActivity.this);
+//        normalDialog.setIcon(R.drawable.icon_dialog);
+        if (keyPos == 0){
+            normalDialog.setTitle("当前设定键值为：" + AppAbKey.getAppKeyA());
+        }else if (keyPos == 1){
+            normalDialog.setTitle("当前设定键值为：" + AppAbKey.getAppKeyA());
+        }
+//        normalDialog.setTitle("当前新设定键值为：" + keyWord);
+        normalDialog.setMessage("当前新设定键值为：" + keyWord + "\n您确定要保存修改吗?");
+        normalDialog.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+                        if (keyPos == 0) {
+                            AppAbKey.setAppKeyA(keyA);
+                            mTabMain.getTabAt(0).setText(KeyName.getKeyName(keyA));
+                        } else if (keyPos == 1) {
+                            AppAbKey.setAppKeyB(keyB);
+                            mTabMain.getTabAt(1).setText(KeyName.getKeyName(keyB));
+                        }
+                    }
+                });
+        normalDialog.setNegativeButton("关闭",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+                    }
+                });
+        // 显示
+        normalDialog.show();
     }
 
 }
