@@ -1,13 +1,8 @@
 package com.spd.abkey.activity.main;
 
 import android.app.AlertDialog;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -15,8 +10,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.spd.abkey.AppAbKey;
 import com.spd.abkey.R;
@@ -27,10 +20,8 @@ import com.spd.abkey.activity.main.presenter.MainPresenter;
 import com.spd.abkey.base.BaseMvpActivity;
 import com.spd.abkey.fragment.AkeyFragment;
 import com.spd.abkey.fragment.BkeyFragment;
-import com.spd.abkey.fragment.model.KeyModel;
 import com.spd.abkey.utils.KeyName;
 import com.spd.abkey.utils.Logcat;
-import com.spd.abkey.utils.SpUtils;
 import com.spd.abkey.utils.ToastUtils;
 import com.spd.abkey.view.SlideViewPager;
 
@@ -134,12 +125,10 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         // 获取位置
         keyPos = tab.getPosition();
         if (keyPos == 0) {
-            ToastUtils.showLongToastSafe("请按下要设定的按键A");
-//            Toast.makeText(MainActivity.this,"请按下要设定的按键",Toast.LENGTH_SHORT).show();
+            ToastUtils.showLongToastSafe(R.string.Pleasressthe);
         } else if (keyPos == 1) {
-            ToastUtils.showLongToastSafe("请按下要设定的按键B");
+            ToastUtils.showLongToastSafe(R.string.Pleareshe);
         }
-//        Toast.makeText(MainActivity.this,"请按下要设定的按键",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -160,52 +149,14 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
         keyWord = keyCode;
         if (keyPos == 0) {
             keyA = keyCode;
-            ToastUtils.showLongToastSafe("设定A键值:" + keyA);
+            ToastUtils.showLongToastSafe(getString(R.string.SetheA) + keyA);
             showNormalDialog();
-
         } else if (keyPos == 1) {
             keyB = keyCode;
-            ToastUtils.showLongToastSafe("设定B键值:" + keyB);
+            ToastUtils.showLongToastSafe(getString(R.string.SetheB) + keyB);
             showNormalDialog();
         }
-
-//        if (keyCode == KeyEvent.KEYCODE_F4) {
-//            String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "");
-//            if (!"".equals(name)) {
-//                runapp(name, AppAbKey.getInstance());
-//            }
-//        } else if (keyCode == KeyEvent.KEYCODE_F5) {
-//            String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_BKEY, "");
-//            if (!"".equals(name)) {
-//                runapp(name, AppAbKey.getInstance());
-//            }
-//        }
-        return true;
-    }
-
-
-    public static void runapp(String packageName, Context mContext) {
-        PackageInfo pi;
-        try {
-            pi = mContext.getPackageManager().getPackageInfo(packageName, 0);
-            Intent resolveIntent = new Intent(Intent.ACTION_MAIN, null);
-            resolveIntent.setPackage(pi.packageName);
-            PackageManager pManager = mContext.getPackageManager();
-            List apps = pManager.queryIntentActivities(
-                    resolveIntent, 0);
-            ResolveInfo ri = (ResolveInfo) apps.iterator().next();
-            if (ri != null) {
-                packageName = ri.activityInfo.packageName;
-                String className = ri.activityInfo.name;
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                ComponentName cn = new ComponentName(packageName, className);
-                intent.setComponent(cn);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void showNormalDialog() {
@@ -216,34 +167,26 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
          */
         final AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(MainActivity.this);
-//        normalDialog.setIcon(R.drawable.icon_dialog);
         if (keyPos == 0){
-            normalDialog.setTitle("当前设定键值为：" + AppAbKey.getAppKeyA());
+            normalDialog.setTitle(getString(R.string.thecurrentset) + AppAbKey.getAppKeyA());
         }else if (keyPos == 1){
-            normalDialog.setTitle("当前设定键值为：" + AppAbKey.getAppKeyA());
+            normalDialog.setTitle(getString(R.string.thecurrentset) + AppAbKey.getAppKeyB());
         }
-//        normalDialog.setTitle("当前新设定键值为：" + keyWord);
-        normalDialog.setMessage("当前新设定键值为：" + keyWord + "\n您确定要保存修改吗?");
-        normalDialog.setPositiveButton("确定",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //...To-do
-                        if (keyPos == 0) {
-                            AppAbKey.setAppKeyA(keyA);
-                            mTabMain.getTabAt(0).setText(KeyName.getKeyName(keyA));
-                        } else if (keyPos == 1) {
-                            AppAbKey.setAppKeyB(keyB);
-                            mTabMain.getTabAt(1).setText(KeyName.getKeyName(keyB));
-                        }
+        normalDialog.setMessage(getString(R.string.Thcurrennew) + keyWord + "\n" + getString(R.string.areyousure));
+        normalDialog.setPositiveButton(getString(R.string.sure),
+                (dialog, which) -> {
+                    //...To-do
+                    if (keyPos == 0) {
+                        AppAbKey.setAppKeyA(keyA);
+                        mTabMain.getTabAt(0).setText(KeyName.getKeyName(keyA));
+                    } else if (keyPos == 1) {
+                        AppAbKey.setAppKeyB(keyB);
+                        mTabMain.getTabAt(1).setText(KeyName.getKeyName(keyB));
                     }
                 });
-        normalDialog.setNegativeButton("关闭",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //...To-do
-                    }
+        normalDialog.setNegativeButton(getString(R.string.close),
+                (dialog, which) -> {
+                    //...To-do
                 });
         // 显示
         normalDialog.show();

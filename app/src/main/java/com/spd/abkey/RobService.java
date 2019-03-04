@@ -11,7 +11,6 @@ import android.os.SystemProperties;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 
-import com.spd.abkey.activity.main.model.MainModel;
 import com.spd.abkey.fragment.model.KeyModel;
 import com.spd.abkey.utils.SpUtils;
 
@@ -36,7 +35,6 @@ public class RobService extends AccessibilityService {
 
     @Override
     protected boolean onKeyEvent(KeyEvent event) {
-
         int keyCode = event.getKeyCode();
         if (keyCode == AppAbKey.getAppKeyA() && event.getAction() == KeyEvent.ACTION_DOWN) {
             String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "");

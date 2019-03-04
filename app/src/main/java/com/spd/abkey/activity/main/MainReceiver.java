@@ -7,13 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.view.KeyEvent;
-
-import com.spd.abkey.AppAbKey;
-import com.spd.abkey.activity.main.model.MainModel;
-import com.spd.abkey.fragment.model.KeyModel;
-import com.spd.abkey.utils.Logcat;
-import com.spd.abkey.utils.SpUtils;
 
 import java.util.List;
 
@@ -26,21 +19,20 @@ public class MainReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Logcat.d("接收到的广播" + intent.getAction());
 
-        int code = intent.getIntExtra(MainModel.KEYCODE, -1);
+//        int code = intent.getIntExtra(MainModel.KEYCODE, -1);
 
-        if (code == MainModel.KEYCODE_A) {
-            String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "");
-            if (!"".equals(name)) {
-                runapp(name, AppAbKey.getInstance());
-            }
-        } else if (code == MainModel.KEYCODE_B) {
-            String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_BKEY, "");
-            if (!"".equals(name)) {
-                runapp(name, AppAbKey.getInstance());
-            }
-        }
+//        if (code == MainModel.KEYCODE_A) {
+//            String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "");
+//            if (!"".equals(name)) {
+//                runapp(name, AppAbKey.getInstance());
+//            }
+//        } else if (code == MainModel.KEYCODE_B) {
+//            String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_BKEY, "");
+//            if (!"".equals(name)) {
+//                runapp(name, AppAbKey.getInstance());
+//            }
+//        }
     }
 
     public static void runapp(String packageName, Context mContext) {

@@ -1,5 +1,8 @@
 package com.spd.abkey.utils;
 
+import com.spd.abkey.AppAbKey;
+import com.spd.abkey.R;
+
 /**
  * 工具类
  *
@@ -14,19 +17,19 @@ public class KeyName {
     public static String getKeyName(int keyCode){
         switch (keyCode){
             case 0:
-                keyName = "未知键";
+                keyName = AppAbKey.getInstance().getString(R.string.unknown_key);
                 break;
             case 24:
-                keyName = "音量键加";
+                keyName = AppAbKey.getInstance().getString(R.string.volume_key_add);
                 break;
             case 25:
-                keyName = "音量键减";
+                keyName = AppAbKey.getInstance().getString(R.string.volume_key_minus);
                 break;
             case 134:
-                keyName = "扫描键右";
+                keyName = AppAbKey.getInstance().getString(R.string.scan_key_right);
                 break;
             case 135:
-                keyName = "扫描键左";
+                keyName = AppAbKey.getInstance().getString(R.string.scan_key_left);
                 break;
             default:
                 keyName = ""+keyCode;

@@ -1,7 +1,8 @@
 package com.spd.abkey;
 
 import android.app.Application;
-import android.view.KeyEvent;
+
+import com.spd.abkey.utils.SpUtils;
 
 /**
  * @author xuyan
@@ -15,6 +16,7 @@ public class AppAbKey extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+
     }
 
     public static AppAbKey getInstance() {
@@ -22,18 +24,20 @@ public class AppAbKey extends Application {
     }
     // 存储键值A
     public static void setAppKeyA(int appKeyA){
-        AppKeyA = appKeyA;
+        SpUtils.put(sInstance, "appKeyA", appKeyA);
     }
-    // 获取键值A
+    // 获取键值A,默认给F1
     public static int getAppKeyA(){
+        AppKeyA = (int) SpUtils.get(sInstance, "appKeyA", 131);
         return AppKeyA;
     }
     // 存储键值B
     public static void setAppKeyB(int appKeyB){
-        AppKeyB = appKeyB;
+        SpUtils.put(sInstance, "appKeyB", appKeyB);
     }
-    // 获取键值B
+    // 获取键值B,默认给F2
     public static int getAppKeyB(){
+        AppKeyB = (int) SpUtils.get(sInstance, "appKeyB", 132);
         return AppKeyB;
     }
 }

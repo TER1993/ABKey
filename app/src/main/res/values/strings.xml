@@ -5,4 +5,19 @@
     <string name="key_a_b">Already occupied, you can click on the application in the KeyB to deselect</string>
     <string name="key_b_a">Already occupied, you can click on the application in the KeyA to deselect</string>
     <string name="key_barrier_free">Please open ABkeys accessibility settings first</string>
+    <string name="unknown_key">unknown key</string>
+    <string name="volume_key_add">volume key add</string>
+    <string name="volume_key_minus">volume key minus</string>
+    <string name="scan_key_right">scan key right</string>
+    <string name="scan_key_left">scan key left</string>
+    <string name="please_press">Please press the button to set the quick start mode.</string>
+    <string name="Pleasressthe">Please press the button A to be set</string>
+    <string name="Pleareshe">Please press the button B to be set</string>
+    <string name="SetheA">Set the A key value:</string>
+    <string name="SetheB">Set the B key value:</string>
+    <string name="thecurrentset">The current set key value is:</string>
+    <string name="sure">sure</string>
+    <string name="areyousure">Are you sure you want to save your changes?</string>
+    <string name="Thcurrennew">The current new set key value is:</string>
+    <string name="close">close</string>
 </resources>

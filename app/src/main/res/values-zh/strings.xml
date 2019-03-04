@@ -5,4 +5,19 @@
     <string name="key_a_b">已被占用，可以在KeyB中点击应用取消选择</string>
     <string name="key_b_a">已被占用，可以在KeyA中点击应用取消选择</string>
     <string name="key_barrier_free">请先打开ABkey的无障碍设置</string>
+    <string name="unknown_key">未知键</string>
+    <string name="volume_key_add">音量键加</string>
+    <string name="volume_key_minus">音量键减</string>
+    <string name="scan_key_right">扫描键右</string>
+    <string name="scan_key_left">扫描键左</string>
+    <string name="please_press">请按下按键用来设定快捷启动方式</string>
+    <string name="Pleasressthe">请按下要设定的按键A</string>
+    <string name="Pleareshe">请按下要设定的按键B</string>
+    <string name="SetheA">设定A键值:</string>
+    <string name="SetheB">设定B键值:</string>
+    <string name="thecurrentset">当前设定键值为：</string>
+    <string name="sure">确定</string>
+    <string name="areyousure">您确定要保存修改吗?</string>
+    <string name="Thcurrennew">当前新设定键值为：</string>
+    <string name="close">关闭</string>
 </resources>
