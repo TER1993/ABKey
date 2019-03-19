@@ -71,6 +71,12 @@ public class BkeyFragment extends BaseMvpFragment<BkeyPresenter> implements KeyC
             appBean.setPackageName(SCAN_SET);
             appBean.setAppIcon(getResources().getDrawable(R.drawable.ic_scan));
             mList.add(appBean);
+        } else {
+            AppBean appBean = new AppBean();
+            appBean.setAppName("Scan");
+            appBean.setPackageName(SCAN_SET);
+            appBean.setAppIcon(getResources().getDrawable(R.drawable.ic_scan));
+            mList.add(appBean);
         }
 
         AppInfoUtil.getAllProgramInfo(mList, AppAbKey.getInstance());

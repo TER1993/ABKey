@@ -142,9 +142,34 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     }
 
     private int keyWord;
+    //返回键监听
+    private long mkeyTime = 0;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //先排除返回键
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+            case KeyEvent.ACTION_DOWN:
+                if ((System.currentTimeMillis() - mkeyTime) > 2000) {
+                    mkeyTime = System.currentTimeMillis();
+                    boolean cn = getApplicationContext().getResources().getConfiguration().locale.getCountry().equals("CN");
+                    if (cn) {
+                        ToastUtils.showShortToastSafe("再次点击返回退出");
+                    } else {
+                        ToastUtils.showShortToastSafe("Press the exit again");
+                    }
+                } else {
+                    try {
+                        finish();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                return false;
+            default:
+                break;
+        }
 
         keyWord = keyCode;
         if (keyPos == 0) {
