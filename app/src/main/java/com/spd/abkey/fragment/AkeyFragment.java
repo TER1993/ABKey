@@ -23,7 +23,6 @@ import com.spd.abkey.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.spd.abkey.fragment.model.KeyModel.SCAN_HEAD;
 import static com.spd.abkey.fragment.model.KeyModel.SCAN_KEY;
 import static com.spd.abkey.fragment.model.KeyModel.SCAN_SET;
 
@@ -65,19 +64,19 @@ public class AkeyFragment extends BaseMvpFragment<AkeyPresenter> implements KeyC
 
     private void getAppList() {
 
-        if ("n63".equals(SystemProperties.get(SCAN_HEAD))) {
-            AppBean appBean = new AppBean();
-            appBean.setAppName("Scan");
-            appBean.setPackageName(SCAN_SET);
-            appBean.setAppIcon(getResources().getDrawable(R.drawable.ic_scan));
-            mList.add(appBean);
-        } else {
-            AppBean appBean = new AppBean();
-            appBean.setAppName("Scan");
-            appBean.setPackageName(SCAN_SET);
-            appBean.setAppIcon(getResources().getDrawable(R.drawable.ic_scan));
-            mList.add(appBean);
-        }
+//        if ("n63".equals(SystemProperties.get(SCAN_HEAD))) {
+//            AppBean appBean = new AppBean();
+//            appBean.setAppName("Scan");
+//            appBean.setPackageName(SCAN_SET);
+//            appBean.setAppIcon(getResources().getDrawable(R.drawable.ic_scan));
+//            mList.add(appBean);
+//        } else {
+//            AppBean appBean = new AppBean();
+//            appBean.setAppName("Scan");
+//            appBean.setPackageName(SCAN_SET);
+//            appBean.setAppIcon(getResources().getDrawable(R.drawable.ic_scan));
+//            mList.add(appBean);
+//        }
 
         AppInfoUtil.getAllProgramInfo(mList, AppAbKey.getInstance());
 
