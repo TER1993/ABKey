@@ -15,6 +15,7 @@
 
         <activity android:name=".activity.main.MainActivity"
             android:screenOrientation="portrait">
+
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
 
