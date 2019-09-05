@@ -27,6 +27,7 @@ import com.spd.abkey.view.SlideViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author xuyan AB键启动
@@ -142,7 +143,9 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
     }
 
     private int keyWord;
-    //返回键监听
+    /**
+     * 返回键监听
+     */
     private long mkeyTime = 0;
 
     @Override
@@ -153,7 +156,7 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
             case KeyEvent.ACTION_DOWN:
                 if ((System.currentTimeMillis() - mkeyTime) > 2000) {
                     mkeyTime = System.currentTimeMillis();
-                    boolean cn = getApplicationContext().getResources().getConfiguration().locale.getCountry().equals("CN");
+                    boolean cn = "CN".equals(getApplicationContext().getResources().getConfiguration().locale.getCountry());
                     if (cn) {
                         ToastUtils.showShortToastSafe("再次点击返回退出");
                     } else {
@@ -203,10 +206,10 @@ public class MainActivity extends BaseMvpActivity<MainPresenter> implements Main
                     //...To-do
                     if (keyPos == 0) {
                         AppAbKey.setAppKeyA(keyA);
-                        mTabMain.getTabAt(0).setText(KeyName.getKeyName(keyA));
+                        Objects.requireNonNull(mTabMain.getTabAt(0)).setText(KeyName.getKeyName(keyA));
                     } else if (keyPos == 1) {
                         AppAbKey.setAppKeyB(keyB);
-                        mTabMain.getTabAt(1).setText(KeyName.getKeyName(keyB));
+                        Objects.requireNonNull(mTabMain.getTabAt(1)).setText(KeyName.getKeyName(keyB));
                     }
                 });
         normalDialog.setNegativeButton(getString(R.string.close),

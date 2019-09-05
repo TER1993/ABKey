@@ -9,8 +9,15 @@ import com.spd.abkey.utils.SpUtils;
  */
 public class AppAbKey extends Application {
     private static AppAbKey sInstance;
-    private static int AppKeyA;//按键值A
-    private static int AppKeyB;//按键值B
+    /**
+     * 按键值A
+     */
+    private static int AppKeyA;
+
+    /**
+     * 按键值B
+     */
+    private static int AppKeyB;
 
     @Override
     public void onCreate() {

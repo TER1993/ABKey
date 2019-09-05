@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ABKey</string>
+    <string name="app_name">快捷启动</string>
 
     <string name="desc" />
     <string name="key_a_b">已被占用，可以在KeyB中点击应用取消选择</string>
@@ -20,4 +20,7 @@
     <string name="areyousure">您确定要保存修改吗?</string>
     <string name="Thcurrennew">当前新设定键值为：</string>
     <string name="close">关闭</string>
+
+    <string name="abkey_title"> 快捷启动 </string>
+    <string name="abkey_summary"> 快捷启动应用 </string>
 </resources>
