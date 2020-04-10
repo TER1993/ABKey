@@ -1,6 +1,7 @@
 package com.spd.abkey;
 
 import android.app.Application;
+import android.provider.Settings;
 
 import com.spd.abkey.utils.SpUtils;
 
@@ -23,7 +24,15 @@ public class AppAbKey extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        enableAccessibilityService("com.spd.abkey/com.spd.abkey.RobService");
+    }
 
+    /**
+     * 开启无障碍
+     */
+    private void enableAccessibilityService(String className) {
+        Settings.Secure.putString(getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, className);
+        Settings.Secure.putString(getContentResolver(), Settings.Secure.ACCESSIBILITY_ENABLED, "1");
     }
 
     public static AppAbKey getInstance() {
