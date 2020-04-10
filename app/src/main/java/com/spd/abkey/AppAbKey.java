@@ -1,6 +1,7 @@
 package com.spd.abkey;
 
 import android.app.Application;
+import android.provider.Settings;
 
 import com.spd.abkey.utils.SpUtils;
 
@@ -23,27 +24,39 @@ public class AppAbKey extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        enableAccessibilityService("com.spd.abkey/com.spd.abkey.RobService");
+    }
 
+    /**
+     * 开启无障碍
+     */
+    private void enableAccessibilityService(String className) {
+        Settings.Secure.putString(getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, className);
+        Settings.Secure.putString(getContentResolver(), Settings.Secure.ACCESSIBILITY_ENABLED, "1");
     }
 
     public static AppAbKey getInstance() {
         return sInstance;
     }
+
     // 存储键值A
-    public static void setAppKeyA(int appKeyA){
+    public static void setAppKeyA(int appKeyA) {
         SpUtils.put(sInstance, "appKeyA", appKeyA);
     }
+
     // 获取键值A,默认给F1
-    public static int getAppKeyA(){
+    public static int getAppKeyA() {
         AppKeyA = (int) SpUtils.get(sInstance, "appKeyA", 135);
         return AppKeyA;
     }
+
     // 存储键值B
-    public static void setAppKeyB(int appKeyB){
+    public static void setAppKeyB(int appKeyB) {
         SpUtils.put(sInstance, "appKeyB", appKeyB);
     }
+
     // 获取键值B,默认给F2
-    public static int getAppKeyB(){
+    public static int getAppKeyB() {
         AppKeyB = (int) SpUtils.get(sInstance, "appKeyB", 132);
         return AppKeyB;
     }
