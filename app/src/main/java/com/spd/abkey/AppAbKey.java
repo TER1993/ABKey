@@ -35,7 +35,7 @@ public class AppAbKey extends Application {
     }
     // 获取键值A,默认给F1
     public static int getAppKeyA(){
-        AppKeyA = (int) SpUtils.get(sInstance, "appKeyA", 131);
+        AppKeyA = (int) SpUtils.get(sInstance, "appKeyA", 135);
         return AppKeyA;
     }
     // 存储键值B

@@ -33,7 +33,7 @@ public class RobService extends AccessibilityService {
     protected boolean onKeyEvent(KeyEvent event) {
         int keyCode = event.getKeyCode();
         if (keyCode == AppAbKey.getAppKeyA() && event.getAction() == KeyEvent.ACTION_DOWN) {
-            String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "");
+            String name = (String) SpUtils.get(AppAbKey.getInstance(), KeyModel.KAY_AKEY, "com.huicoo.forestmanager");
             if (!"".equals(name)) {
                 runapp(name, AppAbKey.getInstance(), "f1");
             }
@@ -43,6 +43,7 @@ public class RobService extends AccessibilityService {
                 runapp(name, AppAbKey.getInstance(), "f2");
             }
         }
+
         return super.onKeyEvent(event);
     }
 
